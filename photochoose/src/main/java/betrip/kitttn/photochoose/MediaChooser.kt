@@ -81,6 +81,11 @@ class MediaChooserFragment : Fragment() {
     private fun launchCamera() {
         val saveTo = createOutputImageFile()
         val photoUri = FileProvider.getUriForFile(activity, "photochooser.fileprovider", saveTo)
+        val readAndWrite = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        Log.i(TAG, "launchCamera: Calling package: ${activity.callingPackage}")
+        if (activity.callingPackage != null)
+            activity.grantUriPermission(activity.callingPackage, photoUri, readAndWrite)
+
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
 
