@@ -79,8 +79,8 @@ class MediaChooserFragment : Fragment() {
     // ========================== Camera request and results =======================
 
     private fun launchCamera() {
-        val saveTo = createOutputImageFile()
-        val photoUri = FileProvider.getUriForFile(activity, "photochooser.fileprovider", saveTo)
+        imageFile = createOutputImageFile()
+        val photoUri = FileProvider.getUriForFile(activity, "photochooser.fileprovider", imageFile)
         val readAndWrite = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         Log.i(TAG, "launchCamera: Calling package: ${activity.callingPackage}")
         if (activity.callingPackage != null)
@@ -97,8 +97,7 @@ class MediaChooserFragment : Fragment() {
         val timestamp = System.currentTimeMillis()
         val fileName = "JPEG_${timestamp}_"
         val storageDir = activity.filesDir
-        imageFile = File.createTempFile(fileName, ".jpg", storageDir)
-        return imageFile
+        return File.createTempFile(fileName, ".jpg", storageDir)
     }
 
     private fun parseImageFromCamera() {
@@ -190,7 +189,7 @@ class MediaChooserFragment : Fragment() {
             parseImageFromGallery(data.data)
         }
 
-        if (requestCode == CAMERA_REQ_CODE && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == CAMERA_REQ_CODE && resultCode == Activity.RESULT_OK) {
             Log.i(TAG, "onActivityResult: Result code: $resultCode; Data: $data")
             parseImageFromCamera()
         }
