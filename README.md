@@ -18,7 +18,7 @@ Step 2. Add the dependency
 
 ```
 dependencies {
-	compile 'com.github.kitttn:async-media-loader-android:0.9.2'
+	compile 'com.github.kitttn:async-media-loader-android:0.9.3'
 }
 ```
 
